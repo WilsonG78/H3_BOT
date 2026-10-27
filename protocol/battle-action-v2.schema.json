@@ -1,0 +1,42 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "const": "action",
+      "default": "action",
+      "title": "Type",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 2,
+      "default": 2,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "battle_id": {
+      "title": "Battle Id",
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 0,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "decision_id": {
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "action_id": {
+      "title": "Action Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "battle_id",
+    "revision",
+    "decision_id",
+    "action_id"
+  ],
+  "title": "ActionReply",
+  "type": "object"
+}

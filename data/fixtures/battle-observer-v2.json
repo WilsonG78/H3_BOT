@@ -1,0 +1,95 @@
+{
+  "type": "observation",
+  "schema_version": 2,
+  "battle_id": "synthetic:1",
+  "revision": 1,
+  "decision_id": "1",
+  "round": 0,
+  "viewer_side": 0,
+  "active_stack_id": null,
+  "engine": "synthetic fixture (not captured from VCMI)",
+  "capabilities": [
+    "open_field",
+    "basic_stack_actions"
+  ],
+  "battlefield": {
+    "width": 17,
+    "height": 11,
+    "hex_encoding": "vcmi_row_major",
+    "obstacles": []
+  },
+  "stacks": [
+    {
+      "id": 1,
+      "creature_id": "core:pikeman",
+      "side_id": 0,
+      "owner": 0,
+      "alive": true,
+      "ghost": false,
+      "count": 10,
+      "top_unit_hp": 10,
+      "max_unit_hp": 10,
+      "total_hp": 100,
+      "position": 86,
+      "occupied_hexes": [
+        86
+      ],
+      "stats": {
+        "attack_melee": 4,
+        "attack_ranged": 4,
+        "defense_melee": 5,
+        "defense_ranged": 5,
+        "damage_min_melee": 1,
+        "damage_max_melee": 3,
+        "damage_min_ranged": 1,
+        "damage_max_ranged": 3,
+        "movement_range": 4
+      },
+      "turn_status": {
+        "waited": false,
+        "moved": false,
+        "defended": false
+      },
+      "shots": 0
+    },
+    {
+      "id": 2,
+      "creature_id": "core:pikeman",
+      "side_id": 1,
+      "owner": 1,
+      "alive": true,
+      "ghost": false,
+      "count": 10,
+      "top_unit_hp": 10,
+      "max_unit_hp": 10,
+      "total_hp": 100,
+      "position": 100,
+      "occupied_hexes": [
+        100
+      ],
+      "stats": {
+        "attack_melee": 4,
+        "attack_ranged": 4,
+        "defense_melee": 5,
+        "defense_ranged": 5,
+        "damage_min_melee": 1,
+        "damage_max_melee": 3,
+        "damage_min_ranged": 1,
+        "damage_max_ranged": 3,
+        "movement_range": 4
+      },
+      "turn_status": {
+        "waited": false,
+        "moved": false,
+        "defended": false
+      },
+      "shots": 0
+    }
+  ],
+  "legal_actions": [],
+  "mode": "observe",
+  "event": "battle_started",
+  "status": "running",
+  "winner_side": null,
+  "error": null
+}

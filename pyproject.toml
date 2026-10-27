@@ -1,0 +1,16 @@
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14"]
+build-backend = "uv_build"
+
+[project]
+name = "h3-bot"
+version = "0.1.0"
+description = "VCMI integration and independent decision modules for Heroes III"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.10,<3",
+]
+
+[project.scripts]
+h3-battle-server = "h3_bot.vcmi.server:main"
+h3-battle-watch = "h3_bot.vcmi.watch:main"

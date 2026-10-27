@@ -1,0 +1,4 @@
+* text=auto
+*.sh text eol=lf
+# Unified diffs contain intentional space-prefixed empty context lines.
+*.patch text eol=lf -whitespace

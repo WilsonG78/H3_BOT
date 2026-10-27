@@ -1,0 +1,35 @@
+# Python environments and generated files
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.uv-cache/
+
+# Native builds and local CMake configuration
+/build/
+/dist/
+CMakeUserPresets.json
+
+# Downloaded sources, SDKs, scratch files, and local engine builds
+/work/
+
+# Private game data and generated experiment outputs
+/data/local/*
+!/data/local/.gitkeep
+/runs/*
+!/runs/.gitkeep
+
+# Credentials and machine-specific metadata
+.env
+.env.*
+!.env.example
+.aws/
+.codex/
+.agents/
+.DS_Store
+Thumbs.db
+AGENTS.md
+# Local agent instructions
+/AGENTS.md

@@ -1,0 +1,595 @@
+{
+  "$defs": {
+    "BattleStack": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "creature_id": {
+          "title": "Creature Id",
+          "type": "string"
+        },
+        "side_id": {
+          "enum": [
+            0,
+            1
+          ],
+          "title": "Side Id",
+          "type": "integer"
+        },
+        "owner": {
+          "title": "Owner",
+          "type": "integer"
+        },
+        "alive": {
+          "title": "Alive",
+          "type": "boolean"
+        },
+        "ghost": {
+          "title": "Ghost",
+          "type": "boolean"
+        },
+        "count": {
+          "minimum": 0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "top_unit_hp": {
+          "minimum": 0,
+          "title": "Top Unit Hp",
+          "type": "integer"
+        },
+        "max_unit_hp": {
+          "minimum": 0,
+          "title": "Max Unit Hp",
+          "type": "integer"
+        },
+        "total_hp": {
+          "minimum": 0,
+          "title": "Total Hp",
+          "type": "integer"
+        },
+        "position": {
+          "title": "Position",
+          "type": "integer"
+        },
+        "occupied_hexes": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Occupied Hexes",
+          "type": "array"
+        },
+        "stats": {
+          "$ref": "#/$defs/StackStats"
+        },
+        "turn_status": {
+          "$ref": "#/$defs/TurnStatus"
+        },
+        "shots": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Shots"
+        }
+      },
+      "required": [
+        "id",
+        "creature_id",
+        "side_id",
+        "owner",
+        "alive",
+        "ghost",
+        "count",
+        "top_unit_hp",
+        "max_unit_hp",
+        "total_hp",
+        "position",
+        "occupied_hexes",
+        "stats",
+        "turn_status",
+        "shots"
+      ],
+      "title": "BattleStack",
+      "type": "object"
+    },
+    "Battlefield": {
+      "additionalProperties": false,
+      "properties": {
+        "width": {
+          "const": 17,
+          "title": "Width",
+          "type": "integer"
+        },
+        "height": {
+          "const": 11,
+          "title": "Height",
+          "type": "integer"
+        },
+        "hex_encoding": {
+          "const": "vcmi_row_major",
+          "title": "Hex Encoding",
+          "type": "string"
+        },
+        "obstacles": {
+          "items": {
+            "$ref": "#/$defs/Obstacle"
+          },
+          "title": "Obstacles",
+          "type": "array"
+        }
+      },
+      "required": [
+        "width",
+        "height",
+        "hex_encoding",
+        "obstacles"
+      ],
+      "title": "Battlefield",
+      "type": "object"
+    },
+    "DefendAction": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "actor_stack_id": {
+          "minimum": 0,
+          "title": "Actor Stack Id",
+          "type": "integer"
+        },
+        "type": {
+          "const": "defend",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "actor_stack_id",
+        "type"
+      ],
+      "title": "DefendAction",
+      "type": "object"
+    },
+    "MeleeAction": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "actor_stack_id": {
+          "minimum": 0,
+          "title": "Actor Stack Id",
+          "type": "integer"
+        },
+        "type": {
+          "const": "melee_attack",
+          "title": "Type",
+          "type": "string"
+        },
+        "target_stack_id": {
+          "minimum": 0,
+          "title": "Target Stack Id",
+          "type": "integer"
+        },
+        "target_hex": {
+          "exclusiveMaximum": 187,
+          "minimum": 0,
+          "title": "Target Hex",
+          "type": "integer"
+        },
+        "destination_hex": {
+          "exclusiveMaximum": 187,
+          "minimum": 0,
+          "title": "Destination Hex",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "actor_stack_id",
+        "type",
+        "target_stack_id",
+        "target_hex",
+        "destination_hex"
+      ],
+      "title": "MeleeAction",
+      "type": "object"
+    },
+    "MoveAction": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "actor_stack_id": {
+          "minimum": 0,
+          "title": "Actor Stack Id",
+          "type": "integer"
+        },
+        "type": {
+          "const": "move",
+          "title": "Type",
+          "type": "string"
+        },
+        "destination_hex": {
+          "exclusiveMaximum": 187,
+          "minimum": 0,
+          "title": "Destination Hex",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "actor_stack_id",
+        "type",
+        "destination_hex"
+      ],
+      "title": "MoveAction",
+      "type": "object"
+    },
+    "Obstacle": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "blocked_hexes": {
+          "items": {
+            "exclusiveMaximum": 187,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Blocked Hexes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "blocked_hexes"
+      ],
+      "title": "Obstacle",
+      "type": "object"
+    },
+    "ShootAction": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "actor_stack_id": {
+          "minimum": 0,
+          "title": "Actor Stack Id",
+          "type": "integer"
+        },
+        "type": {
+          "const": "shoot",
+          "title": "Type",
+          "type": "string"
+        },
+        "target_stack_id": {
+          "minimum": 0,
+          "title": "Target Stack Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "actor_stack_id",
+        "type",
+        "target_stack_id"
+      ],
+      "title": "ShootAction",
+      "type": "object"
+    },
+    "StackStats": {
+      "additionalProperties": false,
+      "properties": {
+        "attack_melee": {
+          "title": "Attack Melee",
+          "type": "integer"
+        },
+        "attack_ranged": {
+          "title": "Attack Ranged",
+          "type": "integer"
+        },
+        "defense_melee": {
+          "title": "Defense Melee",
+          "type": "integer"
+        },
+        "defense_ranged": {
+          "title": "Defense Ranged",
+          "type": "integer"
+        },
+        "damage_min_melee": {
+          "title": "Damage Min Melee",
+          "type": "integer"
+        },
+        "damage_max_melee": {
+          "title": "Damage Max Melee",
+          "type": "integer"
+        },
+        "damage_min_ranged": {
+          "title": "Damage Min Ranged",
+          "type": "integer"
+        },
+        "damage_max_ranged": {
+          "title": "Damage Max Ranged",
+          "type": "integer"
+        },
+        "movement_range": {
+          "minimum": 0,
+          "title": "Movement Range",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "attack_melee",
+        "attack_ranged",
+        "defense_melee",
+        "defense_ranged",
+        "damage_min_melee",
+        "damage_max_melee",
+        "damage_min_ranged",
+        "damage_max_ranged",
+        "movement_range"
+      ],
+      "title": "StackStats",
+      "type": "object"
+    },
+    "TurnStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "waited": {
+          "title": "Waited",
+          "type": "boolean"
+        },
+        "moved": {
+          "title": "Moved",
+          "type": "boolean"
+        },
+        "defended": {
+          "title": "Defended",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "waited",
+        "moved",
+        "defended"
+      ],
+      "title": "TurnStatus",
+      "type": "object"
+    },
+    "WaitAction": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "actor_stack_id": {
+          "minimum": 0,
+          "title": "Actor Stack Id",
+          "type": "integer"
+        },
+        "type": {
+          "const": "wait",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "actor_stack_id",
+        "type"
+      ],
+      "title": "WaitAction",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "const": "observation",
+      "title": "Type",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 2,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "battle_id": {
+      "title": "Battle Id",
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 0,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "decision_id": {
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "round": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Round"
+    },
+    "viewer_side": {
+      "enum": [
+        0,
+        1
+      ],
+      "title": "Viewer Side",
+      "type": "integer"
+    },
+    "active_stack_id": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Active Stack Id"
+    },
+    "engine": {
+      "title": "Engine",
+      "type": "string"
+    },
+    "capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Capabilities",
+      "type": "array"
+    },
+    "battlefield": {
+      "$ref": "#/$defs/Battlefield"
+    },
+    "stacks": {
+      "items": {
+        "$ref": "#/$defs/BattleStack"
+      },
+      "title": "Stacks",
+      "type": "array"
+    },
+    "mode": {
+      "enum": [
+        "observe",
+        "control"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "event": {
+      "enum": [
+        "battle_started",
+        "round_started",
+        "action_finished",
+        "decision",
+        "battle_ended",
+        "environment_error"
+      ],
+      "title": "Event",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "running",
+        "terminated",
+        "error"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "winner_side": {
+      "anyOf": [
+        {
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Winner Side"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error"
+    },
+    "legal_actions": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "defend": "#/$defs/DefendAction",
+            "melee_attack": "#/$defs/MeleeAction",
+            "move": "#/$defs/MoveAction",
+            "shoot": "#/$defs/ShootAction",
+            "wait": "#/$defs/WaitAction"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/DefendAction"
+          },
+          {
+            "$ref": "#/$defs/WaitAction"
+          },
+          {
+            "$ref": "#/$defs/MoveAction"
+          },
+          {
+            "$ref": "#/$defs/ShootAction"
+          },
+          {
+            "$ref": "#/$defs/MeleeAction"
+          }
+        ]
+      },
+      "title": "Legal Actions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "type",
+    "schema_version",
+    "battle_id",
+    "revision",
+    "decision_id",
+    "round",
+    "viewer_side",
+    "active_stack_id",
+    "engine",
+    "capabilities",
+    "battlefield",
+    "stacks",
+    "mode",
+    "event",
+    "status",
+    "legal_actions"
+  ],
+  "title": "BattleObservation",
+  "type": "object"
+}
